@@ -181,29 +181,30 @@ const StudentGrades = () => {
     const groupGradesByTask = (subjectGrades: any[]) => {
         const taskMap = new Map();
         
-        subjectGrades.forEach(grade => {
-            if (!taskMap.has(grade.task._id)) {
-                taskMap.set(grade.task._id, {
-                    taskId: grade.task._id,
-                    taskName: grade.task.name,
-                    taskDescription: grade.task.description || '',
-                    grade: grade.grade,
-                    date: new Date(grade.createdAt),
-                    gradeId: grade._id
+        subjectGrades?.forEach(grade => {
+            if (!taskMap.has(grade?.task?._id) && grade.task) {
+                console.log(grade)
+                taskMap.set(grade?.task?._id, {
+                    taskId: grade?.task?._id,
+                    taskName: grade?.task?.name,
+                    taskDescription: grade?.task?.description || '',
+                    grade: grade?.grade,
+                    date: new Date(grade?.createdAt),
+                    gradeId: grade?._id
                 });
             } else {
                 // If there are multiple grades for the same task, keep the most recent one
-                const existingGrade = taskMap.get(grade.task._id);
-                const newGradeDate = new Date(grade.createdAt);
+                const existingGrade = taskMap.get(grade?.task?._id);
+                const newGradeDate = new Date(grade?.createdAt);
                 
-                if (newGradeDate > existingGrade.date) {
-                    taskMap.set(grade.task._id, {
-                        taskId: grade.task._id,
-                        taskName: grade.task.name,
-                        taskDescription: grade.task.description || '',
-                        grade: grade.grade,
+                if (newGradeDate > existingGrade?.date) {
+                    taskMap.set(grade?.task?._id, {
+                        taskId: grade?.task?._id,
+                        taskName: grade?.task?.name,
+                        taskDescription: grade?.task?.description || '',
+                        grade: grade?.grade,
                         date: newGradeDate,
-                        gradeId: grade._id
+                        gradeId: grade?._id
                     });
                 }
             }
